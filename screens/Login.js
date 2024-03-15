@@ -12,8 +12,8 @@ import COLORS from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import Button from "../components/Button";
-import { loginApi, decodeToken } from "../API_Services/AuthApi";
-import { setToken } from "../API_Services/Token";
+import { loginApi, decodedToken } from "../API_Services/AuthApi";
+import { getToken, setToken } from "../API_Services/Token";
 
 const Login = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -27,17 +27,16 @@ const Login = ({ navigation }) => {
       password,
     };
     try {
-     
       const result = await loginApi(obj);
       const token = result.results;
       console.log("Token:", token);
       await setToken(token);
-      await decodeToken();
+      console.log("Getting Token...", getToken());
+      await decodedToken();
     } catch (error) {
       console.error("Login error:", error);
     }
   };
-  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>

@@ -1,9 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { jwtDecode } from "jwt-decode";
+import * as jwt from "jwt-decode";
 
-export const setToken = async (token: string) => {
+export const setToken = async (token) => {
   try {
-    await AsyncStorage.setItem("token", token);
+    const tokenString = JSON.stringify(token);
+    await AsyncStorage.setItem("token", tokenString);
     console.log("Token set successfully");
   } catch (error) {
     console.error("Error setting token:", error);
@@ -12,7 +13,8 @@ export const setToken = async (token: string) => {
 
 export const getToken = async () => {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const tokenString = await AsyncStorage.getItem("token");
+    const token = JSON.parse(tokenString);
     return token;
   } catch (error) {
     console.log("Error retrieving token:", error);
@@ -20,12 +22,15 @@ export const getToken = async () => {
   }
 };
 
-export const decodeToken = async () => {
+export const decodedToken = async () => {
   try {
     const token = await getToken();
+    console.log("Token:", token);
+
     if (token) {
+      console.log("Get for decoding ", token);
       if (typeof token === "string") {
-        const decodedToken = jwtDecode(token);
+        const decodedToken = await jwt.jwtDecode(token);
         console.log("Decoded token:", decodedToken);
         return decodedToken;
       } else {
