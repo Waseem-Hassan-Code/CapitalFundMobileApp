@@ -12,8 +12,14 @@ import COLORS from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import Button from "../components/Button";
-import { loginApi, decodedToken } from "../API_Services/AuthApi";
-import { getToken, setToken } from "../API_Services/Token";
+import { loginApi } from "../API_Services/AuthApi";
+import {
+  getToken,
+  setToken,
+  getId,
+  getName,
+  getRole,
+} from "../API_Services/Token";
 
 const Login = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -29,10 +35,16 @@ const Login = ({ navigation }) => {
     try {
       const result = await loginApi(obj);
       const token = result.results;
-      console.log("Token:", token);
-      await setToken(token);
-      console.log("Getting Token...", getToken());
-      await decodedToken();
+      const settingToken = await setToken(token);
+
+      if (settingToken) {
+        const role = await getRole();
+        if (role && role == "admin") {
+          navigation.navigate("TenantsRents");
+        } else if (role && role == "user") {
+          navigation.navigate("UserHome");
+        }
+      }
     } catch (error) {
       console.error("Login error:", error);
     }

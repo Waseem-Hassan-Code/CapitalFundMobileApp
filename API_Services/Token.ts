@@ -1,13 +1,38 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as jwt from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const setToken = async (token) => {
   try {
     const tokenString = JSON.stringify(token);
     await AsyncStorage.setItem("token", tokenString);
-    console.log("Token set successfully");
+    return true;
   } catch (error) {
-    console.error("Error setting token:", error);
+    return false;
+  }
+};
+
+export const setId = async (id) => {
+  try {
+    const tokenString = JSON.stringify(id);
+    await AsyncStorage.setItem("uid", tokenString);
+  } catch (error) {
+    console.error("Error setting uid:", error);
+  }
+};
+export const setName = async (name) => {
+  try {
+    const tokenString = JSON.stringify(name);
+    await AsyncStorage.setItem("name", tokenString);
+  } catch (error) {
+    console.error("Error setting name:", error);
+  }
+};
+export const setRole = async (role) => {
+  try {
+    const tokenString = JSON.stringify(role);
+    await AsyncStorage.setItem("role", tokenString);
+  } catch (error) {
+    console.error("Error setting role:", error);
   }
 };
 
@@ -22,6 +47,39 @@ export const getToken = async () => {
   }
 };
 
+export const getId = async () => {
+  try {
+    const IdString = await AsyncStorage.getItem("uid");
+    const Id = JSON.parse(IdString);
+    return Id;
+  } catch (error) {
+    console.log("Error retrieving uid:", error);
+    return null;
+  }
+};
+
+export const getName = async () => {
+  try {
+    const nameString = await AsyncStorage.getItem("name");
+    const name = JSON.parse(nameString);
+    return name;
+  } catch (error) {
+    console.log("Error retrieving name:", error);
+    return null;
+  }
+};
+
+export const getRole = async () => {
+  try {
+    const roleString = await AsyncStorage.getItem("role");
+    const role = JSON.parse(roleString);
+    return role;
+  } catch (error) {
+    console.log("Error retrieving role:", error);
+    return null;
+  }
+};
+
 export const decodedToken = async () => {
   try {
     const token = await getToken();
@@ -30,7 +88,7 @@ export const decodedToken = async () => {
     if (token) {
       console.log("Get for decoding ", token);
       if (typeof token === "string") {
-        const decodedToken = await jwt.jwtDecode(token);
+        const decodedToken = jwtDecode(token);
         console.log("Decoded token:", decodedToken);
         return decodedToken;
       } else {
