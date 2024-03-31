@@ -84,7 +84,7 @@ export default function UserHome() {
       }}
       colors={[COLORS.secondary, COLORS.primary]}
     >
-      <View
+      {/* <View
         style={{
           flexDirection: "row",
           marginTop: 50,
@@ -101,7 +101,7 @@ export default function UserHome() {
         >
           Capital Fund
         </Text>
-      </View>
+      </View> */}
 
       <View style={{ flex: 1 }}>
         {/* content  */}
@@ -140,6 +140,12 @@ export default function UserHome() {
               justifyContent: "center",
             }}
           >
+
+
+
+            {/* current balance is */}
+
+            
             <View style={styles.card}>
               <View style={styles.header}>
                 <Text style={styles.heading}>
@@ -190,7 +196,7 @@ export default function UserHome() {
               </View>
             </View>
           </View>
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <Pressable
               onPressIn={handlePressIn}
               onPress={() => navigation.navigate("PaymentHistory")}
@@ -286,7 +292,7 @@ export default function UserHome() {
                 </View>
               )}
             </Pressable>
-          </View>
+          </View> */}
         </View>
       </View>
     </LinearGradient>
@@ -323,9 +329,9 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#f0f0f0",
     borderRadius: 10,
-    padding: 30,
+    padding: 20,
     margin: 5,
-    width: "95%",
+    width: "100%",
     alignSelf: "center",
   },
   header: {

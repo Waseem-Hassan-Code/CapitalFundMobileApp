@@ -42,7 +42,7 @@ const Login = ({ navigation }) => {
         if (role && role == "admin") {
           navigation.navigate("TenantsRents");
         } else if (role && role == "user") {
-          navigation.navigate("UserHome");
+          navigation.navigate("DrawerNavigation");
         }
       }
     } catch (error) {

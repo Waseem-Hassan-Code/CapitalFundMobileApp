@@ -10,13 +10,15 @@ import {
   NewComplaint,
   PaymentHistory,
 } from "./screens";
+import DrawerNavigation from "./screens/navigator/DrawerNavigation";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator initialRouteName="DrawerNavigation">
+      
         <Stack.Screen
           name="Welcome"
           component={Welcome}
@@ -39,40 +41,23 @@ export default function App() {
           }}
         />
         <Stack.Screen
+        
+          name="DrawerNavigation"
+          component={DrawerNavigation}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="TenantsRents"
           component={TenantsRent}
           options={{
             headerShown: false,
           }}
         />
-        <Stack.Screen
-          name="UserHome"
-          component={UserHome}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="MyComplaints"
-          component={MyComplaints}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="NewComplaint"
-          component={NewComplaint}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="PaymentHistory"
-          component={PaymentHistory}
-          options={{
-            headerShown: false,
-          }}
-        />
+       
+       
+       
       </Stack.Navigator>
     </NavigationContainer>
   );
