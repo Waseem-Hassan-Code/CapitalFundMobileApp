@@ -4,20 +4,17 @@ import {
   Login,
   Signup,
   Welcome,
-  TenantsRent,
-  UserHome,
-  MyComplaints,
-  NewComplaint,
-  PaymentHistory,
+  
 } from "./screens";
 import DrawerNavigation from "./screens/navigator/DrawerNavigation";
+import AdminNavigator from "./screens/navigator/AdminNavigator";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="DrawerNavigation">
+      <Stack.Navigator initialRouteName="Welcome">
       
         <Stack.Screen
           name="Welcome"
@@ -49,8 +46,8 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="TenantsRents"
-          component={TenantsRent}
+          name="AdminSide"
+          component={AdminNavigator}
           options={{
             headerShown: false,
           }}
