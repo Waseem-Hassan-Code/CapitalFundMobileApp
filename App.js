@@ -4,12 +4,10 @@ import {
   Login,
   Signup,
   Welcome,
-  TenantsRent,
-  UserHome,
-  MyComplaints,
-  NewComplaint,
-  PaymentHistory,
+  
 } from "./screens";
+import DrawerNavigation from "./screens/navigator/DrawerNavigation";
+import AdminNavigator from "./screens/navigator/AdminNavigator";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +15,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome">
+      
         <Stack.Screen
           name="Welcome"
           component={Welcome}
@@ -39,40 +38,23 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="TenantsRents"
-          component={TenantsRent}
+        
+          name="DrawerNavigation"
+          component={DrawerNavigation}
           options={{
             headerShown: false,
           }}
         />
         <Stack.Screen
-          name="UserHome"
-          component={UserHome}
+          name="AdminSide"
+          component={AdminNavigator}
           options={{
             headerShown: false,
           }}
         />
-        <Stack.Screen
-          name="MyComplaints"
-          component={MyComplaints}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="NewComplaint"
-          component={NewComplaint}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="PaymentHistory"
-          component={PaymentHistory}
-          options={{
-            headerShown: false,
-          }}
-        />
+       
+       
+       
       </Stack.Navigator>
     </NavigationContainer>
   );
