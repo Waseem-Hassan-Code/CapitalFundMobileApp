@@ -4,6 +4,10 @@ import { getToken } from "./Token";
 //=================Create Tenants Residency==================
 
 export const createTenantResidency = async (data: any) => {
+  console.log('in ts');
+  
+  console.log(data);
+  
   try {
     const token = await getToken();
     const result = await ApiManager.post(`/api/addNewContract`, data, {

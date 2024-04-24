@@ -28,7 +28,8 @@ const styles=StyleSheet.create({
 
     },
     detailModal:{  backgroundColor: 'white', padding: 10, width: '100%',
-    alignSelf: 'center', borderRadius: 10},
+    alignSelf: 'center', borderRadius: 10,
+paddingVertical:20},
     rowItem:{
         width:'50%',alignSelf:'center',
     },
