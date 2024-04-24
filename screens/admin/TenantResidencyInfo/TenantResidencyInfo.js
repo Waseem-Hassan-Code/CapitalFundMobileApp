@@ -342,8 +342,8 @@ const TenantResidencyInfo = () => {
 
 
                     <TextInput style={styles.inputstyle} 
-                        onChangeText={getRent}
-                        value={(detail.rentPerMonth).toString()}
+                        onChangeText={(v)=>changeRent(v)}
+                       
                         keyboardType="numeric"
                     />
 
