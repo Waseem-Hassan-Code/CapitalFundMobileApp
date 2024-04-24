@@ -60,6 +60,8 @@ export const deleteTenantInfo = async (Id: string) => {
 export const getTenantsInfo = async (page: number, pageSize: number) => {
   try {
     const token = await getToken();
+    console.log(token);
+    console.log(page, pageSize);
     const result = await ApiManager.get(
       `/api/getAllTenants?page=${page}&pageSize=${pageSize}`,
       {
