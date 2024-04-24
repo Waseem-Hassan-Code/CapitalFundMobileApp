@@ -10,7 +10,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Toast from "react-native-simple-toast";
 import {
-  deletePropertyDetails,
+  deleteTenantInfo,
   getTenantsInfo,
 } from "../../../API_Services/TenantsManagment";
 import { styles } from "./style";
@@ -39,11 +39,11 @@ const PropertyDetails = () => {
   };
 
   const deleteItem = async (id) => {
-    let response = await deletePropertyDetails(id);
+    let response = await deleteTenantInfo(id);
 
     if (response.isSuccess) {
       Toast.show("Property deleted successfully.");
-      getProperties();
+      getTenantsInfo();
     } else {
       Toast.show("Failed to delete property.");
     }
