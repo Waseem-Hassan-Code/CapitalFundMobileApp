@@ -42,6 +42,7 @@ export const updateTenantInfo = async (data: any) => {
 export const deleteTenantInfo = async (Id: string) => {
   try {
     const token = await getToken();
+    console.log("Called deletion");
     const result = await ApiManager.get(`/api/deleteTenantInfo?Id=${Id}`, {
       headers: {
         "Content-Type": "application/json",
