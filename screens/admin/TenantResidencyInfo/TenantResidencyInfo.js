@@ -4,7 +4,7 @@ import {
     TouchableOpacity,
     TextInput, map
 } from 'react-native';
-import { createTenantResidency, deleteTenantResidency, getenantResidency } from '../../../API_Services/TenantsResidency';
+import { createTenantResidency, deleteTenantResidency, getenantResidency, updateTenantResidency } from '../../../API_Services/TenantsResidency';
 import { styles } from "./Style";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Plus from "react-native-vector-icons/AntDesign";
@@ -24,21 +24,22 @@ const TenantResidencyInfo = () => {
     const [ResidencyData, setResidencyData] = useState();
     const [modalOptions, setModalOptions] = useState(false);
     const [modalDetail, setModalDetail] = useState(false);
-    const [detail , setdetail] = useState(null);
+    const [detail, setdetail] = useState(null);
     const [isFormModal, setFormModal] = useState(false);
     const [open, setOpen] = useState(false);
     const [userNameList, setUserNameList] = useState();
     const [userPropertiesList, setPropertiesList] = useState();
-    const [isModalUpdate,setModalUpdate]=useState(false);
+    const [isModalUpdate, setModalUpdate] = useState(false);
 
     // all input fields of form are here
     const [selectedUser, setSelectedUser] = useState('Select Username');
     const [selectedProperty, setSelectedProperty] = useState();
-    const [rentPerMonth, setRentPerMonth] = useState();
+    const [rentPerMonth, setRentPerMonth] = useState(0);
     const [movedOutDate, setMovedOutDate] = useState(new Date())
     const [movedInDate, setMovedInDate] = useState(new Date());
+    const [dateToShow, setdateToShow] = useState('select date');
     const [showPicker, setShowPicker] = useState(false);
-
+    const [updateObject, setUpdateObject] = useState(null);
     useEffect(() => {
         getUserNamesList();
         getPropertiesNamesList();
@@ -46,6 +47,7 @@ const TenantResidencyInfo = () => {
 
 
     }, [])
+
 
     const getUserNamesList = async () => {
 
@@ -66,6 +68,7 @@ const TenantResidencyInfo = () => {
         const formattedDateMovedIn = movedInDate.toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' });
         const formattedTimeMovedIn = movedInDate.toLocaleTimeString('en-US', { timeZone: 'Asia/Karachi' });
         // setMovedInDate(formattedDateMovedIn)
+
         console.log('moved in date = ', movedInDate);
         const obj =
         {
@@ -78,8 +81,7 @@ const TenantResidencyInfo = () => {
         };
 
         let res = await createTenantResidency(obj);
-        if(res.isSuccess)
-        {
+        if (res.isSuccess) {
             Toast.show(res.message);
             setFormModal(false);
             getTanentsData();
@@ -100,7 +102,12 @@ const TenantResidencyInfo = () => {
         setModalOptions(true)
     }
 
+    const changeRent = (v) => {
 
+
+        setRentPerMonth(v)
+
+    }
     const renderData = ({ item }) => {
         return (
             <View style={styles.showProperty}>
@@ -140,16 +147,58 @@ const TenantResidencyInfo = () => {
         setShowPicker(true);
     };
     const onChange = (event, selectedDate) => {
-
+        console.log('date');
         const currentDate = selectedDate || date;
         setShowPicker(false); // Close the picker on iOS
-        // const formattedDateMovedIn = currentDate.toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' });
+        const formattedDateMovedIn = currentDate.toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' });
+        setdateToShow(formattedDateMovedIn)
+        console.log(dateToShow);
         setMovedInDate(currentDate);
     };
     const getRent = (text) => {
         const cleanedText = text.replace(/[^0-9]/g, '');
 
         setRentPerMonth(cleanedText)
+    }
+
+    const openModelUpdate = () => {
+        setModalUpdate(true);
+        setUpdateObject(detail);
+        console.log(detail.rentPerMonth);
+        setSelectedUser(detail.userName);
+        setSelectedProperty(detail.propertyName);
+        setRentPerMonth(detail.rentPerMonth);
+
+        setdateToShow(detail.movedIn);
+
+
+    }
+
+    const UpdateData = async () => {
+
+        console.log('going to update');
+        console.log(detail.id);
+
+        const obj =
+        {
+            "id": detail.id,
+            "userId": selectedUser,
+            "propertyId": selectedProperty,
+            "movedIn": movedInDate,
+            "movedOut": "in Residence",
+            "rentPerMonth": rentPerMonth
+        };
+
+        let res = await updateTenantResidency(obj);
+        if (res.isSuccess) {
+            Toast.show(res.message)
+
+            setModalUpdate(false);
+            getTanentsData();
+            setModalOptions(false);
+        }
+
+        console.log(res);
     }
 
     return (
@@ -173,7 +222,7 @@ const TenantResidencyInfo = () => {
                     <TouchableOpacity style={styles.btn} onPress={() => setModalDetail(true)}>
                         <Text style={styles.textStylebtn}>{'Detail'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn} onPress={()=>setModalUpdate(true)}>
+                    <TouchableOpacity style={styles.btn} onPress={() => openModelUpdate()}>
                         <Text style={styles.textStylebtn}>{'Update'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btn} onPress={() => deleteData()}>
@@ -224,6 +273,8 @@ const TenantResidencyInfo = () => {
 
             </Modal>
 
+
+
             <Modal isVisible={isFormModal} onBackButtonPress={() => setFormModal(false)}
                 onBackdropPress={() => setFormModal(false)}>
 
@@ -270,7 +321,7 @@ const TenantResidencyInfo = () => {
                     <TouchableOpacity style={styles.datePickerView}
                         onPress={showDatepicker}>
                         <Text style={styles.txt}>{
-                            movedInDate.toString()
+                            dateToShow
                         }</Text>
                         <DateIcon name="date" size={25} color={'green'} />
                     </TouchableOpacity>
@@ -316,11 +367,11 @@ const TenantResidencyInfo = () => {
                             <Picker.Item key={0} label={'Select Username'} color="gray" value={""} />
 
                             {userNameList?.map((item) => (
-                                
 
-                                    <Picker.Item key={item.id} label={item.name} value={item.id} />
-                               
-                                
+
+                                <Picker.Item key={item.id} label={item.name} value={item.id} />
+
+
                             ))}
                         </Picker>
                     </View>
@@ -341,23 +392,18 @@ const TenantResidencyInfo = () => {
 
 
 
-                    <TextInput style={styles.inputstyle} 
-                        onChangeText={(v)=>changeRent(v)}
-                       
+                    <TextInput style={styles.inputstyle}
+                        onChangeText={(v) => changeRent(v)}
+                        value={rentPerMonth?.toString()}
                         keyboardType="numeric"
                     />
 
 
-
                     <TouchableOpacity style={styles.datePickerView}
                         onPress={showDatepicker}>
-                        <Text style={styles.txt}>{
-                            movedInDate.toString()
-                        }</Text>
+                        <Text>{dateToShow}</Text>
                         <DateIcon name="date" size={25} color={'green'} />
                     </TouchableOpacity>
-
-
 
 
                     {showPicker ? (
@@ -374,8 +420,8 @@ const TenantResidencyInfo = () => {
 
 
                     <TouchableOpacity style={styles.btnSubmit}
-                        onPress={() => submitData()}>
-                        <Text style={styles.textStylebtn}>{'Submit'}</Text>
+                        onPress={() => UpdateData()}>
+                        <Text style={styles.textStylebtn}>{'Update'}</Text>
                     </TouchableOpacity>
 
 
