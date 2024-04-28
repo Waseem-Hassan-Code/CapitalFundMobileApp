@@ -1,10 +1,10 @@
 import { Platform } from "react-native";
 import axios from "axios";
 
-let baseURL = "http://192.168.67.42:5181";
+let baseURL = "http://192.168.10.12:5180";
 
 if (Platform.OS === "ios") {
-  baseURL = "http://192.168.67.42:5181";
+  baseURL = "http://192.168.10.12:5180";
 }
 
 const ApiManager = axios.create({
@@ -15,4 +15,4 @@ const ApiManager = axios.create({
 
 export default ApiManager;
 
-// HOME : http://192.168.10.13:5180
+// HOME : http://192.168.10.12:5180

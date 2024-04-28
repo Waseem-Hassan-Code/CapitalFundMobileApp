@@ -116,7 +116,7 @@ const PaymentHistory = ({ navigation }) => {
       colors={[COLORS.secondary, COLORS.primary]}
     >
       <View style={{ flex: 1 }}>
-        <Text
+        {/* <Text
           style={{
             fontSize: 24,
             fontWeight: "bold",
@@ -127,7 +127,7 @@ const PaymentHistory = ({ navigation }) => {
           }}
         >
           Payment History
-        </Text>
+        </Text> */}
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}

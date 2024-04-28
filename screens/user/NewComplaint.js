@@ -53,7 +53,7 @@ const NewComplaint = ({ navigation }) => {
       colors={[COLORS.secondary, COLORS.primary]}
     >
       <View style={styles.content}>
-        <Text style={styles.heading}>Add Complaint</Text>
+        {/* <Text style={styles.heading}>Add Complaint</Text> */}
         {image && (
           <Image
             source={{ uri: image }}

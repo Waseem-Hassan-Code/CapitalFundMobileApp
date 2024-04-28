@@ -79,16 +79,18 @@ export default function UserHome() {
 
   return (
     <View style={styles.main}>
-
       <View style={styles.upper}>
-        <Text style={styles.heading}>{'Capital'}</Text>
+        <Text style={styles.heading}>
+          {" "}
+          {greeting}, {name}{" "}
+        </Text>
       </View>
 
       <View style={styles.lower}>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Your Current Balance is ${calculateTotalBalance()}</Text>
-
-
+          <Text style={styles.cardTitle}>
+            Your Current Balance is ${calculateTotalBalance()}
+          </Text>
 
           <View style={styles.rw}>
             <View style={styles.right}>
@@ -97,9 +99,6 @@ export default function UserHome() {
             <View style={styles.left}>
               <Text style={styles.cardTitleHeading}>Amount</Text>
             </View>
-
-
-
           </View>
           <View style={styles.rw}>
             <View style={styles.right}>
@@ -110,8 +109,6 @@ export default function UserHome() {
             </View>
           </View>
 
-
-
           <View style={styles.rw}>
             <View style={styles.right}>
               <Text style={styles.cardTitle}>Maintenance</Text>
@@ -120,7 +117,6 @@ export default function UserHome() {
               <Text style={styles.cardTitle}>{maintenance}</Text>
             </View>
           </View>
-
 
           <View style={styles.rw}>
             <View style={styles.right}>
@@ -131,64 +127,73 @@ export default function UserHome() {
             </View>
           </View>
 
-
-          <View style={{...styles.rw,borderTopWidth:2}}>
+          <View style={{ ...styles.rw, borderTopWidth: 2 }}>
             <View style={styles.right}>
               <Text style={styles.cardTitleHeading}>Total Balance</Text>
             </View>
             <View style={styles.left}>
-              <Text style={styles.cardTitleHeading}>$550</Text>
+              <Text style={styles.cardTitleHeading}>
+                {calculateTotalBalance()}
+              </Text>
             </View>
           </View>
-
-
         </View>
       </View>
-
-
-
-
-       
     </View>
-
-
-
   );
 }
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1, backgroundColor: '#f0f0f0', margin: 10
+    flex: 1,
+    backgroundColor: "#f0f0f0",
+    margin: 10,
   },
   heading: {
-    fontSize: 24, color: COLORS.primary, fontWeight: "bold"
+    fontSize: 24,
+    color: COLORS.primary,
+    fontWeight: "bold",
   },
   upper: {
     flex: 1,
-    justifyContent: "center", alignItems: "center"
+    justifyContent: "center",
+    alignItems: "center",
   },
   lower: {
     flex: 5,
   },
   card: {
-    backgroundColor: 'white', elevation: 5, padding: 10,borderRadius:10,
-    shadowColor:COLORS.primary
+    backgroundColor: "white",
+    elevation: 5,
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: COLORS.primary,
   },
   cardTitle: {
-    fontSize: 16, color: COLORS.primary
+    fontSize: 16,
+    color: COLORS.primary,
   },
   rw: {
-    flexDirection: 'row', alignItems: "center",
-     justifyContent: 'space-evenly',borderBottomWidth:0.5,paddingVertical:10,
-     borderColor:COLORS.secondary
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    borderBottomWidth: 0.5,
+    paddingVertical: 10,
+    borderColor: COLORS.secondary,
   },
   cardTitleHeading: {
-    fontSize: 16, color: COLORS.primary, fontWeight: 'bold', alignSelf: 'center'
+    fontSize: 16,
+    color: COLORS.primary,
+    fontWeight: "bold",
+    alignSelf: "center",
   },
   right: {
-    width: '50%', margin: 5,
+    width: "50%",
+    margin: 5,
   },
   left: {
-    width: '50%', margin: 5,alignItems:"center"
-  }
+    width: "50%",
+    margin: 5,
+    alignItems: "center",
+  },
 });

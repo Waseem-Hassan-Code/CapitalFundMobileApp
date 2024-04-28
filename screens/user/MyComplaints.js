@@ -90,7 +90,7 @@ const MyComplaints = ({ navigation }) => {
       colors={[COLORS.secondary, COLORS.primary]}
     >
       <View style={{ flex: 1 }}>
-        <Text
+        {/* <Text
           style={{
             fontSize: 24,
             fontWeight: "bold",
@@ -101,7 +101,7 @@ const MyComplaints = ({ navigation }) => {
           }}
         >
           My Complaints
-        </Text>
+        </Text> */}
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
