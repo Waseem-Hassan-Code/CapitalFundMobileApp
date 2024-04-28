@@ -78,295 +78,117 @@ export default function UserHome() {
   };
 
   return (
-    <LinearGradient
-      style={{
-        flex: 1,
-      }}
-      colors={[COLORS.secondary, COLORS.primary]}
-    >
-      {/* <View
-        style={{
-          flexDirection: "row",
-          marginTop: 50,
-          justifyContent: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 40,
-            color: COLORS.white,
-            fontWeight: 900,
-            marginLeft: 4,
-          }}
-        >
-          Capital Fund
-        </Text>
-      </View> */}
+    <View style={styles.main}>
 
-      <View style={{ flex: 1 }}>
-        {/* content  */}
+      <View style={styles.upper}>
+        <Text style={styles.heading}>{'Capital'}</Text>
+      </View>
 
-        <View
-          style={{
-            paddingHorizontal: 20,
-            position: "absolute",
-            top: 20,
-            width: "100%",
-          }}
-        >
-          <View style={{ marginLeft: 10 }}>
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: 800,
-                color: COLORS.white,
-              }}
-            >
-              Hi, {name}
-            </Text>
+      <View style={styles.lower}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Your Current Balance is ${calculateTotalBalance()}</Text>
+
+
+
+          <View style={styles.rw}>
+            <View style={styles.right}>
+              <Text style={styles.cardTitleHeading}>Description</Text>
+            </View>
+            <View style={styles.left}>
+              <Text style={styles.cardTitleHeading}>Amount</Text>
+            </View>
+
+
+
           </View>
-          <View style={{ flexDirection: "row", marginLeft: 10 }}>
-            <Text style={{ fontSize: 25, fontWeight: "800", color: "white" }}>
-              {greeting}
-            </Text>
-            <View style={{ width: 5 }}></View>
-            <Icon name={iconName} size={30} color="white" />
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 30,
-              justifyContent: "center",
-            }}
-          >
-
-
-
-            {/* current balance is */}
-
-            
-            <View style={styles.card}>
-              <View style={styles.header}>
-                <Text style={styles.heading}>
-                  Your current balance: ${calculateTotalBalance()}
-                </Text>
-                <Text style={styles.subHeading}>{month}</Text>
-              </View>
-              <View style={styles.table}>
-                <View style={styles.row}>
-                  <Text
-                    style={[
-                      styles.column,
-                      { color: "#2e32a5", fontSize: 15, fontWeight: "800" },
-                    ]}
-                  >
-                    Description
-                  </Text>
-
-                  <Text
-                    style={[
-                      styles.column,
-                      { color: "#2e32a5", fontSize: 15, fontWeight: "800" },
-                    ]}
-                  >
-                    Amount
-                  </Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.column}>Rent</Text>
-                  <Text style={styles.column}>{rent}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.column}>Maintenance</Text>
-                  <Text style={styles.column}>{maintenance}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={[styles.column, { color: "#d62c2c" }]}>
-                    Late Fee
-                  </Text>
-                  <Text style={[styles.column, { color: "#d62c2c" }]}>
-                    {lateFee}
-                  </Text>
-                </View>
-                <View style={[styles.row, styles.totalRow]}>
-                  <Text style={styles.totalColumn}>Total Balance</Text>
-                  <Text style={styles.totalColumn}>$550</Text>
-                </View>
-              </View>
+          <View style={styles.rw}>
+            <View style={styles.right}>
+              <Text style={styles.cardTitle}>Rent</Text>
+            </View>
+            <View style={styles.left}>
+              <Text style={styles.cardTitle}>{rent}</Text>
             </View>
           </View>
-          {/* <View style={styles.container}>
-            <Pressable
-              onPressIn={handlePressIn}
-              onPress={() => navigation.navigate("PaymentHistory")}
-              onPressOut={handlePressOut}
-            >
-              {({ pressed }) => (
-                <View style={[styles.box, pressed && styles.boxPressed]}>
-                  <Icon
-                    name="paypal"
-                    size={30}
-                    color={pressed ? "blue" : "red"}
-                  />
-                  <Text
-                    style={[
-                      styles.text,
-                      { color: pressed ? "blue" : COLORS.white },
-                    ]}
-                  >
-                    Payment
-                  </Text>
-                  <Text
-                    style={[
-                      styles.text,
-                      { color: pressed ? "blue" : COLORS.white },
-                    ]}
-                  >
-                    History
-                  </Text>
-                </View>
-              )}
-            </Pressable>
 
-            <Pressable
-              onPressIn={handlePressIn}
-              onPress={() => navigation.navigate("NewComplaint")}
-              onPressOut={handlePressOut}
-            >
-              {({ pressed }) => (
-                <View style={[styles.box, pressed && styles.boxPressed]}>
-                  <Icon
-                    name="error"
-                    size={30}
-                    color={pressed ? "blue" : "red"}
-                  />
-                  <Text
-                    style={[
-                      styles.text,
-                      { color: pressed ? "blue" : COLORS.white },
-                    ]}
-                  >
-                    New
-                  </Text>
-                  <Text
-                    style={[
-                      styles.text,
-                      { color: pressed ? "blue" : COLORS.white },
-                    ]}
-                  >
-                    Complaints
-                  </Text>
-                </View>
-              )}
-            </Pressable>
 
-            <Pressable
-              onPressIn={handlePressIn}
-              onPress={() => navigation.navigate("MyComplaints")}
-              onPressOut={handlePressOut}
-            >
-              {({ pressed }) => (
-                <View style={[styles.box, pressed && styles.boxPressed]}>
-                  <Icon
-                    name="history"
-                    size={30}
-                    color={pressed ? "blue" : "red"}
-                  />
-                  <Text
-                    style={[
-                      styles.text,
-                      { color: pressed ? "blue" : COLORS.white },
-                    ]}
-                  >
-                    My
-                  </Text>
-                  <Text
-                    style={[
-                      styles.text,
-                      { color: pressed ? "blue" : COLORS.white },
-                    ]}
-                  >
-                    Complaints
-                  </Text>
-                </View>
-              )}
-            </Pressable>
-          </View> */}
+
+          <View style={styles.rw}>
+            <View style={styles.right}>
+              <Text style={styles.cardTitle}>Maintenance</Text>
+            </View>
+            <View style={styles.left}>
+              <Text style={styles.cardTitle}>{maintenance}</Text>
+            </View>
+          </View>
+
+
+          <View style={styles.rw}>
+            <View style={styles.right}>
+              <Text style={styles.cardTitle}>Late Fee</Text>
+            </View>
+            <View style={styles.left}>
+              <Text style={styles.cardTitle}>{lateFee}</Text>
+            </View>
+          </View>
+
+
+          <View style={{...styles.rw,borderTopWidth:2}}>
+            <View style={styles.right}>
+              <Text style={styles.cardTitleHeading}>Total Balance</Text>
+            </View>
+            <View style={styles.left}>
+              <Text style={styles.cardTitleHeading}>$550</Text>
+            </View>
+          </View>
+
+
         </View>
       </View>
-    </LinearGradient>
+
+
+
+
+       
+    </View>
+
+
+
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    marginTop: 30,
-  },
-  box: {
-    width: 100,
-    height: 100,
-    borderRadius: 15,
-    backgroundColor: COLORS.primary,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  boxPressed: {
-    backgroundColor: "#d3d3d3",
-  },
-  icon: {
-    marginBottom: 10,
-    color: "white",
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: "800",
-    color: COLORS.white,
-  },
-  card: {
-    backgroundColor: "#f0f0f0",
-    borderRadius: 10,
-    padding: 20,
-    margin: 5,
-    width: "100%",
-    alignSelf: "center",
-  },
-  header: {
-    marginBottom: 20,
+  main: {
+    flex: 1, backgroundColor: '#f0f0f0', margin: 10
   },
   heading: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 5,
+    fontSize: 24, color: COLORS.primary, fontWeight: "bold"
   },
-  subHeading: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  table: {
-    width: "100%",
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 5,
-  },
-  column: {
+  upper: {
     flex: 1,
-    fontSize: 16,
-    marginHorizontal: 10,
+    justifyContent: "center", alignItems: "center"
   },
-  totalRow: {
-    marginTop: 10,
-    borderTopWidth: 1,
-    paddingTop: 5,
+  lower: {
+    flex: 5,
   },
-  totalColumn: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "bold",
+  card: {
+    backgroundColor: 'white', elevation: 5, padding: 10,borderRadius:10,
+    shadowColor:COLORS.primary
   },
+  cardTitle: {
+    fontSize: 16, color: COLORS.primary
+  },
+  rw: {
+    flexDirection: 'row', alignItems: "center",
+     justifyContent: 'space-evenly',borderBottomWidth:0.5,paddingVertical:10,
+     borderColor:COLORS.secondary
+  },
+  cardTitleHeading: {
+    fontSize: 16, color: COLORS.primary, fontWeight: 'bold', alignSelf: 'center'
+  },
+  right: {
+    width: '50%', margin: 5,
+  },
+  left: {
+    width: '50%', margin: 5,alignItems:"center"
+  }
 });

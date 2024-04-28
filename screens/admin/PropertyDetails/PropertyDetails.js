@@ -8,9 +8,10 @@ import Toast from 'react-native-simple-toast';
 import { deletePropertyDetails, getAllProperties, createPropertyDetails, updatePropertyDetails } from "../../../API_Services/BuildingsManagment";
 import Plus from "react-native-vector-icons/AntDesign";
 import { Picker } from '@react-native-picker/picker';
-
+import { useIsFocused } from '@react-navigation/native';
 
 const PropertyDetails = () => {
+    const isFocused = useIsFocused();
 
     const [dataProperty, setDataProperty] = useState();
 
@@ -39,7 +40,7 @@ const PropertyDetails = () => {
 
         getProperties();
 
-    }, [])
+    }, [isFocused])
     const getProperties = async () => {
 
 
@@ -62,7 +63,7 @@ const PropertyDetails = () => {
             "isAvailable": isAvailable,
             "description": description
         }
-        console.log('/////////////////////////////////////////');
+        // console.log('/////////////////////////////////////////');
         let res = await createPropertyDetails(obj);
         if (res.isSuccess) {
             Toast.show(res.message);
@@ -82,28 +83,88 @@ const PropertyDetails = () => {
 
 
         return (
-            <View style={styles.showProperty}>
-                <Text style={styles.textStyle}>{item.propertyName}</Text>
-                <TouchableOpacity style={styles.btn} onPress={() => Open_Options(item)}>
-                    <Icon name="expand-more" size={25} color={'white'} />
-                </TouchableOpacity>
+            <View>
 
+
+                <View style={styles.showProperty}>
+                    <Text style={styles.textStyle}>{item.propertyName}</Text>
+                    <View style={styles.rightIcons}>
+                        <TouchableOpacity onPress={() => Open_Options(item)}>
+                            <Icon name="delete" size={25} color={'green'} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => openModelUpdate(item)}>
+                            <Icon name="edit" size={25} color={'green'} />
+                        </TouchableOpacity>
+                    </View>
+                    {/* <TouchableOpacity style={styles.btn} onPress={() => Open_Options(item)}>
+                    <Icon name="expand-more" size={25} color={'white'} />
+                </TouchableOpacity> */}
+
+
+
+                </View>
+
+                <View style={styles.RowShow}>
+                    <Text style={styles.rowItem}>{'Property Name'}</Text>
+                    <Text style={styles.rowItemRight}>{item?.propertyName}</Text>
+                </View>
+
+                <View style={styles.RowShow}>
+                    <Text style={styles.rowItem}>{'address'}</Text>
+                    <Text style={styles.rowItemRight}>{item?.address}</Text>
+                </View>
+
+                <View style={styles.RowShow}>
+                    <Text style={styles.rowItem}>{'Type of Property'}</Text>
+                    <Text style={styles.rowItemRight}>{item?.typeofProperty}</Text>
+                </View>
+
+                
+
+                <View style={styles.RowShow}>
+
+                    <Text style={styles.rowItem}>{'No. of bedrooms'}</Text>
+
+
+                    <Text style={styles.rowItemRight}>{item?.numberofBedrooms}</Text>
+
+
+                </View>
+
+                <View style={styles.RowShow}>
+                    <Text style={styles.rowItem}>{'No. of bathrooms'}</Text>
+                    <Text style={styles.rowItemRight}>{item?.numberofBathrooms}</Text>
+                </View>
+
+                <View style={styles.RowShow}>
+                    <Text style={styles.rowItem}>{'is Available'}</Text>
+                    <Text style={styles.rowItemRight}>{(item?.isAvailable) ?
+                        'yes'
+                        : 'no'}
+                        </Text>
+                </View>
+
+                <View style={styles.RowShow}>
+                    <Text style={styles.rowItem}>{'Description'}</Text>
+                    <Text style={styles.rowItemRight}>{item?.description}</Text>
+                </View>
 
 
             </View>
         )
     }
-    const openModelUpdate = () => {
+    const openModelUpdate = (item) => {
 
-        
 
-        setPname(detail.propertyName);
-        setAddress(detail.address);
-        setpType(detail.typeofProperty);
-        setnoOfBedrooms(detail.numberofBedrooms);
-        setnoOfBathrooms(detail.numberofBathrooms);
-        setIsAvailable(detail.isAvailable);
-        setDescription(detail.description);
+
+        setPname(item.propertyName);
+        setAddress(item.address);
+        setpType(item.typeofProperty);
+        setnoOfBedrooms(item.numberofBedrooms);
+        setnoOfBathrooms(item.numberofBathrooms);
+        setIsAvailable(item.isAvailable);
+        setDescription(item.description);
+        setdetail(item);
         setModalUpdate(true);
 
     }
@@ -157,7 +218,25 @@ const PropertyDetails = () => {
                 onBackdropPress={() => setModalOptions(false)}
                 onBackButtonPress={() => setModalOptions(false)}>
 
-                <View style={{ backgroundColor: 'white', padding: 10, width: '50%', alignSelf: 'center', borderRadius: 10 }}>
+                <View style={{
+                    backgroundColor: 'white', padding: 10, width: '80%',
+                    alignSelf: 'center', borderRadius: 10, paddingVertical: 40
+                }}>
+                    <Text style={styles.textStylebtn2}>{'Do you want to delete?'}</Text>
+                    <View style={styles.ysnoBtn}>
+                        <TouchableOpacity style={styles.yessNo} onPress={deleteItem} >
+                            <Text style={{ color: 'white' }}>{'Yess'}</Text>
+
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.yessNo} onPress={() => setModalOptions(false)}>
+                            <Text style={{ color: 'white', }}>{'No'}</Text>
+
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+                {/* <View style={{ backgroundColor: 'white', padding: 10, width: '50%', alignSelf: 'center', borderRadius: 10 }}>
                     <TouchableOpacity style={styles.btn} onPress={() => setModalDetail(true)}>
                         <Text style={styles.textStylebtn}>{'Detail'}</Text>
                     </TouchableOpacity>
@@ -167,7 +246,7 @@ const PropertyDetails = () => {
                     <TouchableOpacity style={styles.btn} onPress={() => deleteItem()}>
                         <Text style={styles.textStylebtn}>{'Delete'}</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
 
             </Modal>
 
@@ -251,10 +330,10 @@ const PropertyDetails = () => {
 
 
 
-                    <TextInput style={styles.inputstyle} placeholder='Enter Rent/month'
+                    {/* <TextInput style={styles.inputstyle} placeholder='Enter Rent/month'
                         onChangeText={(v) => setRentPerMonth(v)}
                         keyboardType="numeric"
-                    />
+                    /> */}
                     <TextInput style={styles.inputstyle} placeholder='No. of Bedrooms'
                         onChangeText={(v) => setnoOfBedrooms(v)}
                         keyboardType="numeric"
@@ -333,11 +412,11 @@ const PropertyDetails = () => {
 
 
 
-                    <TextInput style={styles.inputstyle} placeholder='Enter Rent/month'
+                    {/* <TextInput style={styles.inputstyle} placeholder='Enter Rent/month'
                         onChangeText={(v) => setRentPerMonth(v)}
                         value={rentPerMonth.toString()}
                         keyboardType="numeric"
-                    />
+                    /> */}
                     <TextInput style={styles.inputstyle} placeholder='No. of Bedrooms'
                         onChangeText={(v) => setnoOfBedrooms(v)}
                         value={noOfBedrooms.toString()}

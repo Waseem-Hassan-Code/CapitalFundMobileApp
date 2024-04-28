@@ -64,7 +64,7 @@ const PropertyDetails = () => {
             <TouchableOpacity onPress={() => deleteItem(item.id)}>
               <Icon name="delete" size={24} color={COLORS.error} />
             </TouchableOpacity>
-          </View>
+          </View>  
         </View>
         <View style={styles.propertyDetails}>
           <Text>

@@ -54,7 +54,7 @@ const Login = ({ navigation }) => {
     };
     try {
       const result = await loginApi(obj);
-      console.log(result.isSuccess);
+      console.log(result);
       if(result.isSuccess==false)
       {
         Toast.show('wrong credientials')
