@@ -70,11 +70,18 @@ const TenantsPayments = () => {
     const getAllPaymentsList = async () => {
         console.log('hhhh');
         let userNamesResponse = await getAllPayments(1, 10);
-        console.log(userNamesResponse?.results?.items);
-        setPaymentsData(userNamesResponse.results.items)
+        console.log(userNamesResponse);
+        if(userNamesResponse.isSuccess==false)
+        {
+            setPaymentsData('')
+        }
+        else{
+            setPaymentsData(userNamesResponse.results.items)
+        }
 
 
     }
+      
 
 
 
@@ -179,8 +186,8 @@ const TenantsPayments = () => {
     }
 
     const deleteData = async () => {
-        console.log(paymentsData);
-        console.log('deleting ......');
+        // console.log(paymentsData);
+        // console.log('deleting ......');
 
         let response = await deletePayments(detail.id);
         console.log(response);
