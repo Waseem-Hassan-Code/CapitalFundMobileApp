@@ -50,7 +50,6 @@ const TenantResidencyInfo = () => {
   const [movedInDate, setMovedInDate] = useState(new Date());
   const [dateToShow, setdateToShow] = useState("select date");
   const [showPicker, setShowPicker] = useState(false);
-  const [updateObject, setUpdateObject] = useState(null);
   useEffect(() => {
     getUserNamesList();
     getPropertiesNamesList();

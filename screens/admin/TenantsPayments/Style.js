@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     padding: 15,
     borderRadius: 10,
-    marginBottom: 10,
+    margin: 10,
     elevation: 3,
   },
   cardHeader: {
