@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
         fontSize: 20, color: 'white'
     },
     RowShow: {
-        flexDirection: 'row', width: '100%',
-        justifyContent: "space-between", alignItems: "center", paddingVertical: 10,
-        backgroundColor: 'white', margin: 3, borderBottomWidth: 1, borderColor: 'lightgray'
+        flexDirection: 'row',  
+        justifyContent: "space-between", alignItems: "center", paddingVertical: 3,
+        backgroundColor: 'whitesmoke',  marginHorizontal:10, borderBottomWidth: 1, borderColor: 'lightgray'
 
     },
     detailModal: {
@@ -62,7 +62,21 @@ const styles = StyleSheet.create({
         width: '90%', backgroundColor: 'white', borderRadius: 10, color: 'black', alignSelf: 'center',
         padding: 10, borderWidth: 0.5, marginVertical: 5, flexDirection: 'row',
         justifyContent: 'space-between', alignItems: 'center'
-    }
+    },
+    rightIcons: {
+        flexDirection: 'row', alignItems: 'center', width: '30%', justifyContent: 'space-evenly'
+    },
+    yessNo: {
+        backgroundColor: COLORS.primary, padding: 10, borderRadius: 5, margin: 10, width: '40%', alignItems: "center",
+        justifyContent: "center"
+    },
+    ysnoBtn: {
+        flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-evenly',
+
+    },
+    textStylebtn2: {
+        fontSize: 16, color: 'black', alignSelf: 'center', fontWeight: 'bold'
+    },
 
 });
 export { styles };

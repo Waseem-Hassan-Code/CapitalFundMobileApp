@@ -17,10 +17,10 @@ import { Picker } from '@react-native-picker/picker';
 import DateIcon from "react-native-vector-icons/Fontisto";
 import { getAllProperties } from "../../../API_Services/BuildingsManagment";
 import { getPropertiesNameDDL, getUserNameDDL } from "../../../API_Services/AdditionalAPIs";
-
+import { useIsFocused } from '@react-navigation/native';
 
 const TenantResidencyInfo = () => {
-
+    const isFocused = useIsFocused();
     const [ResidencyData, setResidencyData] = useState();
     const [modalOptions, setModalOptions] = useState(false);
     const [modalDetail, setModalDetail] = useState(false);
@@ -46,7 +46,7 @@ const TenantResidencyInfo = () => {
         getTanentsData();
 
 
-    }, [])
+    }, [isFocused])
 
 
     const getUserNamesList = async () => {
@@ -65,11 +65,13 @@ const TenantResidencyInfo = () => {
 
     const submitData = async () => {
 
+        // console.log('iddd = ',selectedUser);
+        // return;
         const formattedDateMovedIn = movedInDate.toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' });
         const formattedTimeMovedIn = movedInDate.toLocaleTimeString('en-US', { timeZone: 'Asia/Karachi' });
         // setMovedInDate(formattedDateMovedIn)
 
-        console.log('moved in date = ', movedInDate);
+        // console.log('moved in date = ', movedInDate);
         const obj =
         {
             "id": "",
@@ -109,12 +111,58 @@ const TenantResidencyInfo = () => {
 
     }
     const renderData = ({ item }) => {
+        console.log('jjjj');
+        console.log(item);
         return (
-            <View style={styles.showProperty}>
-                <Text style={styles.textStyle}>{item.userName}</Text>
-                <TouchableOpacity style={styles.btn} onPress={() => Open_Options(item)}>
-                    <Icon name="expand-more" size={25} color={'white'} />
-                </TouchableOpacity>
+            <View>
+
+ 
+                <View style={styles.showProperty}>
+                    <Text style={styles.textStyle}>{item.userName}</Text>
+
+                    <View style={styles.rightIcons}>
+                        <TouchableOpacity onPress={() => Open_Options(item)}>
+                            <Icon name="delete" size={25} color={'green'} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => openModelUpdate(item)}>
+                            <Icon name="edit" size={25} color={'green'} />
+                        </TouchableOpacity>
+                    </View>
+                    {/* <TouchableOpacity style={styles.btn} onPress={() => Open_Options(item)}>
+                        <Icon name="expand-more" size={25} color={'white'} />
+                    </TouchableOpacity> */}
+                </View>
+
+                <View style={styles.RowShow}>
+                        <Text style={styles.rowItem}>{'Username'}</Text>
+                        <Text style={styles.rowItemRight}>{item?.userName}</Text>
+                    </View>
+
+                    <View style={styles.RowShow}>
+                        <Text style={styles.rowItem}>{'property Name'}</Text>
+                        <Text style={styles.rowItemRight}>{item?.propertyName}</Text>
+                    </View>
+
+                    <View style={styles.RowShow}>
+                        <Text style={styles.rowItem}>{'rent per month'}</Text>
+                        <Text style={styles.rowItemRight}>{item?.rentPerMonth}</Text>
+                    </View>
+
+                    <View style={styles.RowShow}>
+
+                        <Text style={styles.rowItem}>{'Moved in'}</Text>
+
+
+                        <Text style={styles.rowItemRight}>{item?.movedIn}</Text>
+
+
+                    </View>
+
+                    {/* <View style={styles.RowShow}>
+                        <Text style={styles.rowItem}>{'Moved in'}</Text>
+                        <Text style={styles.rowItemRight}>{0}</Text>
+                    </View> */}
+
 
 
 
@@ -124,7 +172,7 @@ const TenantResidencyInfo = () => {
 
     const deleteData = async () => {
 
-        console.log('deleting ......');
+         
 
         let response = await deleteTenantResidency(detail.id);
 
@@ -161,16 +209,16 @@ const TenantResidencyInfo = () => {
         setRentPerMonth(cleanedText)
     }
 
-    const openModelUpdate = () => {
+    const openModelUpdate = (item) => {
+         
+        setdetail(item)
+        // console.log(item?.rentPerMonth);    
+        setSelectedUser(item?.userName);
+        setSelectedProperty(item?.propertyName);
+        setRentPerMonth(item?.rentPerMonth);
+
+        setdateToShow(item?.movedIn);
         setModalUpdate(true);
-        setUpdateObject(detail);
-        console.log(detail.rentPerMonth);
-        setSelectedUser(detail.userName);
-        setSelectedProperty(detail.propertyName);
-        setRentPerMonth(detail.rentPerMonth);
-
-        setdateToShow(detail.movedIn);
-
 
     }
 
@@ -218,60 +266,29 @@ const TenantResidencyInfo = () => {
                 onBackdropPress={() => setModalOptions(false)}
                 onBackButtonPress={() => setModalOptions(false)}>
 
-                <View style={{ backgroundColor: 'white', padding: 10, width: '50%', alignSelf: 'center', borderRadius: 10 }}>
-                    <TouchableOpacity style={styles.btn} onPress={() => setModalDetail(true)}>
-                        <Text style={styles.textStylebtn}>{'Detail'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn} onPress={() => openModelUpdate()}>
-                        <Text style={styles.textStylebtn}>{'Update'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn} onPress={() => deleteData()}>
-                        <Text style={styles.textStylebtn}>{'Delete'}</Text>
-                    </TouchableOpacity>
+                <View style={{
+                    backgroundColor: 'white', padding: 10, width: '80%',
+                    alignSelf: 'center', borderRadius: 10, paddingVertical: 40
+                }}>
+                    <Text style={styles.textStylebtn2}>{'Do you want to delete?'}</Text>
+                    <View style={styles.ysnoBtn}>
+                        <TouchableOpacity style={styles.yessNo} onPress={deleteData}>
+                            <Text style={{ color: 'white' }}>{'Yess'}</Text>
+
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.yessNo} onPress={() => setModalOptions(false)}>
+                            <Text style={{ color: 'white', }}>{'No'}</Text>
+
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
 
             </Modal>
 
 
-            <Modal isVisible={modalDetail}
-                onBackdropPress={() => setModalDetail(false)}
-                onBackButtonPress={() => setModalDetail(false)}>
-
-                <View style={styles.detailModal}>
-                    <View style={styles.RowShow}>
-                        <Text style={styles.rowItem}>{'Username'}</Text>
-                        <Text style={styles.rowItemRight}>{detail?.userName}</Text>
-                    </View>
-
-                    <View style={styles.RowShow}>
-                        <Text style={styles.rowItem}>{'property Name'}</Text>
-                        <Text style={styles.rowItemRight}>{detail?.propertyName}</Text>
-                    </View>
-
-                    <View style={styles.RowShow}>
-                        <Text style={styles.rowItem}>{'rent per month'}</Text>
-                        <Text style={styles.rowItemRight}>{detail?.rentPerMonth}</Text>
-                    </View>
-
-                    <View style={styles.RowShow}>
-
-                        <Text style={styles.rowItem}>{'Moved in'}</Text>
-
-
-                        <Text style={styles.rowItemRight}>{detail?.movedIn}</Text>
-
-
-                    </View>
-
-                    <View style={styles.RowShow}>
-                        <Text style={styles.rowItem}>{'Moved in'}</Text>
-                        <Text style={styles.rowItemRight}>{detail?.movedOut}</Text>
-                    </View>
-
-
-                </View>
-
-            </Modal>
+            
 
 
 
@@ -364,7 +381,7 @@ const TenantResidencyInfo = () => {
                             selectedValue={selectedUser}
                             onValueChange={(itemValue, itemIndex) => setSelectedUser(itemValue)}
                         >
-                            <Picker.Item key={0} label={'Select Username'} color="gray" value={""} />
+                            <Picker.Item key={0} label={'select User'} color="gray" value={""} />
 
                             {userNameList?.map((item) => (
 
@@ -381,7 +398,7 @@ const TenantResidencyInfo = () => {
                             selectedValue={selectedProperty}
                             onValueChange={(itemValue, itemIndex) => setSelectedProperty(itemValue)}
                         >
-                            <Picker.Item key={0} label={'Select Property'} color="gray" value={""} />
+                            <Picker.Item key={0} label={'select Property'} color="gray" value={""} />
 
                             {userPropertiesList?.map((item) => (
                                 <Picker.Item key={item.id} label={item.name} value={item.id} />

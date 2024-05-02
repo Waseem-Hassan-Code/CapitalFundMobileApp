@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,31 +10,40 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../../constants/colors";
 import Button from "../../components/Button";
-import ImagePicker from "react-native-image-picker";
+// import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from 'expo-image-picker';
+
 
 const NewComplaint = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
 
-  const selectImage = () => {
-    const options = {
-      title: "Select Image",
-      storageOptions: {
-        skipBackup: true,
-        path: "images",
-      },
-    };
-
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        console.log("User cancelled image picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-      } else {
-        setImage(response.uri);
+  useEffect(() => {
+    (async () => {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Permission to access camera roll is required!');
       }
+    })();
+  }, []);
+  
+  const selectImage = async() => {
+    
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+  
+    console.log(result.assets[0].uri);
+    setImage(result.assets[0].uri)
+    if (!result.cancelled) {
+      setImage(result.assets[0].uri);
+      console.log('nnnnnn');
+    }
+     
   };
 
   const handleSubmit = () => {
@@ -53,14 +62,19 @@ const NewComplaint = ({ navigation }) => {
       colors={[COLORS.secondary, COLORS.primary]}
     >
       <View style={styles.content}>
-        <Text style={styles.heading}>Add Complaint</Text>
-        {image && (
-          <Image
-            source={{ uri: image }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        )}
+        {/* <Text style={styles.heading}>Add Complaint</Text> */}
+        {image!=null ?
+           
+           <Image
+           style={{height:100,width:100,alignSelf:'center',borderRadius:10}}
+           source={{
+             uri: image,
+           }}
+         />
+         
+        
+        :null}
+        
         <Pressable onPress={selectImage}>
           <Text style={styles.chooseImageText}>Choose Image</Text>
         </Pressable>

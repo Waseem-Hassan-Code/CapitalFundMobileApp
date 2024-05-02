@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   Login,
   Signup,
+  UserHome,
   Welcome,
   
 } from "./screens";
@@ -52,7 +53,13 @@ export default function App() {
             headerShown: false,
           }}
         />
-       
+        <Stack.Screen
+          name="UserHome"
+          component={UserHome}
+          options={{
+            headerShown: false,
+          }}
+        />
        
        
       </Stack.Navigator>
