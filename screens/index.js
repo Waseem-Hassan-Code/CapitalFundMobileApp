@@ -5,8 +5,10 @@ import UserHome from "./user/UserHome";
 import MyComplaints from "./user/MyComplaints";
 import PaymentHistory from "./user/PaymentHistory";
 import NewComplaint from "./user/NewComplaint";
+import SplashScreen from "./SplashScreen";
 
 export {
+  SplashScreen,
   Login,
   Welcome,
   Signup,

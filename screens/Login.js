@@ -23,20 +23,6 @@ import {
 } from "../API_Services/Token";
 
 const Login = ({ navigation }) => {
-  const fetchData = async () => {
-    const isToken = await getToken();
-
-    if (isToken != null) {
-      const role = await getRole();
-
-      if (role == "admin") {
-        navigation.navigate("AdminSide");
-      }
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState("");

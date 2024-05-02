@@ -1,14 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  Login,
-  Signup,
-  UserHome,
-  Welcome,
-  
-} from "./screens";
+import { Login, Signup, UserHome, Welcome } from "./screens";
 import DrawerNavigation from "./screens/navigator/DrawerNavigation";
 import AdminNavigator from "./screens/navigator/AdminNavigator";
+import React, { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +11,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome">
-      
         <Stack.Screen
           name="Welcome"
           component={Welcome}
@@ -39,7 +33,6 @@ export default function App() {
           }}
         />
         <Stack.Screen
-        
           name="DrawerNavigation"
           component={DrawerNavigation}
           options={{
@@ -60,8 +53,6 @@ export default function App() {
             headerShown: false,
           }}
         />
-       
-       
       </Stack.Navigator>
     </NavigationContainer>
   );
