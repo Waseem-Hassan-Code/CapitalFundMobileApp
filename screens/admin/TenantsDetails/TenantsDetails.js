@@ -53,7 +53,9 @@ const PropertyDetails = () => {
     return (
       <View style={styles.cardContainer}>
         <View style={styles.cardHeader}>
-          <Text style={styles.propertyName}>{item.name}</Text>
+          <Text style={[styles.propertyName, { color: "green" }]}>
+            {item.name}
+          </Text>
           <View style={styles.propertyActions}>
             <TouchableOpacity onPress={() => viewDetails(item)}>
               <Icon name="info" size={24} color={COLORS.primary} />
@@ -64,7 +66,7 @@ const PropertyDetails = () => {
             <TouchableOpacity onPress={() => deleteItem(item.id)}>
               <Icon name="delete" size={24} color={COLORS.error} />
             </TouchableOpacity>
-          </View>  
+          </View>
         </View>
         <View style={styles.propertyDetails}>
           <Text>

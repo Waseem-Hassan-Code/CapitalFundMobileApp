@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import Button from "../components/Button";
 import { loginApi } from "../API_Services/AuthApi";
-import Toast from 'react-native-simple-toast';
+import Toast from "react-native-simple-toast";
 import {
   getToken,
   setToken,
@@ -23,25 +23,20 @@ import {
 } from "../API_Services/Token";
 
 const Login = ({ navigation }) => {
+  const fetchData = async () => {
+    const isToken = await getToken();
 
-  const fetchData=async()=>{
-     
-    const isToken=await getToken();
-     
-    if(isToken!=null)
-    {
-      const role=await getRole();
-       
-      if(role=='admin')
-      {
-        navigation.navigate('AdminSide');
+    if (isToken != null) {
+      const role = await getRole();
+
+      if (role == "admin") {
+        navigation.navigate("AdminSide");
       }
     }
-  }
+  };
   useEffect(() => {
-      
-   fetchData();
-  }, [])
+    fetchData();
+  }, []);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState("");
@@ -55,27 +50,26 @@ const Login = ({ navigation }) => {
     try {
       const result = await loginApi(obj);
       console.log(result);
-      if(result.isSuccess==false)
-      {
-        Toast.show('wrong credientials')
+      if (result.isSuccess == false) {
+        Toast.show("wrong credientials");
         return;
       }
-     
+
       const token = result.results;
 
-      console.log('token = ' + token);
+      console.log("token = " + token);
       const settingToken = await setToken(token);
       console.log(settingToken);
       if (settingToken) {
         const role = await getRole();
-        console.log('..........');
+        console.log("..........");
         console.log(role);
         if (role && role == "admin") {
           navigation.navigate("AdminSide");
         } else if (role && role == "user") {
           navigation.navigate("DrawerNavigation");
         } else {
-          Toast.show('invalid')
+          Toast.show("invalid");
         }
       }
     } catch (error) {
@@ -245,6 +239,7 @@ const Login = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => console.log("Pressed")}
+            disabled
             style={{
               flex: 1,
               alignItems: "center",
@@ -272,6 +267,7 @@ const Login = ({ navigation }) => {
 
           <TouchableOpacity
             onPress={() => console.log("Pressed")}
+            disabled
             style={{
               flex: 1,
               alignItems: "center",

@@ -119,7 +119,7 @@ const Welcome = ({ navigation }) => {
                 marginVertical: 4,
               }}
             >
-              Connect with each other with chatting
+              Welcome to our tenant community!
             </Text>
             <Text
               style={{
@@ -127,7 +127,7 @@ const Welcome = ({ navigation }) => {
                 color: COLORS.white,
               }}
             >
-              Calling, Enjoy Safe and private texting
+              let's make our living experience even better!
             </Text>
           </View>
 
