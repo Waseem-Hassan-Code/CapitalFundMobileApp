@@ -64,3 +64,24 @@ export const getComplaintsHistory = async (
     throw error;
   }
 };
+
+export const createNewComplaint = async (complaintData: any, file: File) => {
+  try {
+    const token = await getToken();
+    const formData = new FormData();
+    formData.append("tenantId", complaintData.tenantId);
+    formData.append("title", complaintData.title);
+    formData.append("details", complaintData.details);
+    formData.append("file", file);
+    const result = await ApiManager.post(`/api/newComplaint`, formData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return result.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
