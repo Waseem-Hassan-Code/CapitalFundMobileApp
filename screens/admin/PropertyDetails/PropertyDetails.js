@@ -87,10 +87,10 @@ const PropertyDetails = () => {
           {/* <Text style={styles.textStyle}>{item.propertyName}</Text> */}
           <View style={styles.propertyActions}>
             <TouchableOpacity onPress={() => openModelUpdate(item)}>
-              <Icon name="edit" size={25} color={"green"} />
+              <Icon name="edit" size={25} color={COLORS.secondary} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => Open_Options(item)}>
-              <Icon name="delete" size={25} color={"green"} />
+              <Icon name="delete" size={25} color={COLORS.red} />
             </TouchableOpacity>
           </View>
         </View>
